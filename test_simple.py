@@ -15,6 +15,9 @@ import PIL.Image as pil
 import matplotlib as mpl
 import matplotlib.cm as cm
 
+#Import - Alvaro
+#from PIL import ImageSequence
+
 import torch
 from torchvision import transforms, datasets
 
@@ -105,6 +108,11 @@ def test_simple(args):
     print("-> Predicting on {:d} test images".format(len(paths)))
 
     # PREDICTING ON EACH IMAGE IN TURN
+    # Retrieve frames - Alvaro
+    #for frame in ImageSequence.Iterator(/home/alvaro/monodepth/monodepth2/assets
+    #/test2.mp4): #video 1920 x 1080
+
+
     with torch.no_grad():
         for idx, image_path in enumerate(paths):
 
@@ -130,7 +138,9 @@ def test_simple(args):
             # Saving numpy file
             output_name = os.path.splitext(os.path.basename(image_path))[0]
             name_dest_npy = os.path.join(output_directory, "{}_disp.npy".format(output_name))
-            scaled_disp, _ = disp_to_depth(disp, 0.1, 100)
+            # @Alvaro
+            #scaled_disp, _ = disp_to_depth(disp, 0.1, 100)
+            scaled_disp, _ = disp_to_depth(disp_resized, 0, 1)
             np.save(name_dest_npy, scaled_disp.cpu().numpy())
 
             # Saving colormapped depth image
